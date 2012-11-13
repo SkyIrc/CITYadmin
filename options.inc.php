@@ -16,12 +16,12 @@ define('DEBUG_MYSQL', true);
 define('VERSION', '0.1');
 
 // Database table prefix
-define('TBL_PRE', '');
+define('TBL_PRE', 'cityadmin_');
 
 // Guest ID for settings-handling
 define('GUEST_ID', null);
 
 // Cookie prefix
-define('COOKIE_PRE', 'skies_');
+define('COOKIE_PRE', 'cityadmin_');
 
 ?>

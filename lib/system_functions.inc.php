@@ -20,4 +20,11 @@ function escape($string) {
 
 }
 
+function sortBySubkey(&$array, $subkey, $sortType = SORT_ASC) {
+    foreach ($array as $subarray) {
+        $keys[] = $subarray[$subkey];
+    }
+    array_multisort($keys, $sortType, $array);
+}
+
 ?>
