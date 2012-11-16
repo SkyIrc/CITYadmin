@@ -1,31 +1,42 @@
+<h1>CITY overview</h1>
+<p>
+    <strong>What is CITY?</strong><br />
+    CITY is a modification for Teeworlds (<a href="http://teeworlds.com/">teeworlds.com</a>).
+    It is a mod mainly established in Teeworlds version 0.5.2 on the servers <em>Mikael96's City Server</em> and <em>moro's City Server</em>, but also known from other servers.
+    There are some permission ranks in CITY, like <em>POLICE</em>, <em>whitelisted</em> or <em>administrator</em>.
+</p>
+<p>
+    <strong>What is this here?</strong><br />
+    You're in the online panel for the CITY modification at the moment. This panel allows you to administer your account, for admins it allows
+    to administer all accounts. It also shows some statistics and rank lists. Here are some features that are implemented now:
+</p>
+
+<ul>
+    <li>Login for all CITY users with their in-game accounts</li>
+    <li>Editing profile for all users (Password, Terrorist status, etc.)</li>
+    <li>Account list for POLICE, whitelisted and Admins</li>
+    <li>Editing all account for special Account Admins</li>
+</ul>
+
+<h2>Choose a CITY</h2>
+
+<ul>
+
 <?php
-/**
- * @author    Janek Ostendorf (ozzy) <ozzy2345de@gmail.com>
- * @copyright Copyright (c) Janek Ostendorf
- * @license   http://opensource.org/licenses/gpl-3.0.html GNU General Public License, version 3
- */
+
+foreach(\skies\city\City::$cities as $city) {
+
+    /** @var $city \skies\city\City */
+    $info = $city->getInfo();
+
+    ?>
+
+    <li><a href="/city/<?=$city->getName()?>"><?=$city->getTitle()?></a> (<?=$info->getNumPlayers()?>/<?=$info->getMaxPlayers()?>)</li>
+
+    <?php
+
+}
 
 ?>
 
-<h1>Skies</h1>
-
-<p>
-    This is Skies. Obviously, there isn't much to see yet. Move along.
-</p>
-
-<hr />
-<a href="https://github.com/ozzy2345/Skies">
-    <img src="<?=SUBDIR?>/images/github.png" style="float: left; vertical-align: middle; padding-right: 10px;" />
-    <span style="line-height: 32px;">Skies on GitHub.</span>
-    <div class="clear"></div>
-</a>
-
-<hr />
-
-<img src="<?=SUBDIR?>/images/default-avatar.png" style="width: 100px; float: left; vertical-align: middle; padding-right: 10px;" />
-<span style="line-height: 100px;">This is a draft of a default avatar.</span>
-<div class="clear"></div>
-
-<hr />
-
-<button>I thought a bit orange would be good for this page.</button>
+</ul>
