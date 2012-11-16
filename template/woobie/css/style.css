@@ -41,15 +41,26 @@ html, body {
 }
 
 #logo {
-    height: 180px;
+    height: 210px;
     margin: auto auto;
-    background: #fff url("../images/logo.png") center center no-repeat;
+    background: #fff;
+    text-align: center;
+}
+
+#logo  img {
+    padding: 15px 0;
 }
 
 #content {
-    padding: 20px 20px 50px;
+    padding: 0 20px 50px 20px;
     background: #fff;
     font-size: 12px;
+}
+
+#content h1:first-of-type {
+
+    margin-top: 0;
+
 }
 
 #footer-wrapper {
@@ -129,12 +140,15 @@ h1:hover, h2:hover, h3:hover, h4:hover {
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
+#content > h1, #content > h2, #content > h3, #content > h4 {
+    margin: 30px -20px 10px -20px;
+}
+
 h1, h2 {
 
     background: rgb(250, 250, 250) url('../images/header-right.png') repeat-y right top;
     border-top: 1px solid rgb(230, 230, 230);
     border-bottom: 1px solid rgb(230, 230, 230);
-    margin: 30px -20px 10px -20px;
     padding: 4px 20px;
 
 }
@@ -142,7 +156,6 @@ h1, h2 {
 h3, h4 {
 
     border-bottom: 1px solid rgb(230, 230, 230);
-    margin: 30px -20px 10px -20px;
     padding: 4px 20px;
 
 }
@@ -176,7 +189,6 @@ a, a:visited {
     -moz-transition: text-shadow 0.1s, color 0.1s;
     -webkit-transition: text-shadow 0.1s, color 0.1s;
     -o-transition: text-shadow 0.1s, color 0.1s;
-    border: none;
 }
 
 a:hover {
@@ -187,15 +199,18 @@ a:active {
     color: #000000;
 }
 
-a img {
-    border: none;
-}
-
-tt {
+tt, code {
     display: inline;
     padding: 0 2px;
     background: rgb(250, 250, 250);
     border: 1px solid rgb(230, 230, 230);
+}
+
+code {
+    display: block;
+    padding: 5px;
+    max-height: 200px;
+    overflow: auto;
 }
 
 /*
@@ -287,6 +302,7 @@ fieldset > legend {
  *  Tables
  */
 
+
 table {
     border: none;
     font-family: Arial, Helvetiva, sans-serif;
@@ -326,9 +342,10 @@ table tr.header, table thead tr {
 
 table tr.header th, table thead tr th {
     color: #000;
-    font-family: 'URW Gothic L', sans-serif;
+    font-family: 'Ubuntu-L', sans-serif;
     font-size: 130%;
     font-weight: normal;
+    text-align: left;
 }
 
 table tr.sum {

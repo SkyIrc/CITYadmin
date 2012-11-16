@@ -38,7 +38,7 @@ css_files: css/fonts.css, css/style.css, css/nav.css, css/forms.css
 js_files: js/jQuery.js
 
 # Favicon (relative to Skies main dir)
-favicon: images/favicon.png
+favicon: ../../images/favicon.png
 
 # Favicon MIME type
 fav_mime: image/png

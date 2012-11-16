@@ -32,7 +32,9 @@ use skies\system\template\Message;
 
 
             <!-- Start logo -->
-            <div id="logo"></div>
+            <div id="logo">
+                <img src="/images/logo.png" />
+            </div>
             <!-- End logo -->
 
 
