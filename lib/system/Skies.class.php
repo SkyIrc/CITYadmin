@@ -301,6 +301,9 @@ class Skies {
 
         }
 
+        // CITY stuff
+        \skies\city\City::initCitys();
+
     }
 
     /**

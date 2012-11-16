@@ -23,6 +23,20 @@ class City {
      */
 
     /**
+     * Array holding all citys
+     *
+     * @var array<City>
+     */
+    public static $cities = [];
+
+    /**
+     * Current city
+     *
+     * @var \skies\city\City
+     */
+    public static $curCity;
+
+    /**
      * How many CITYs do we have?
      *
      * @var int
@@ -64,6 +78,26 @@ class City {
      */
     private $accountCount = 0;
 
+    /**
+     * Hostname of the server
+     *
+     * @var string
+     */
+    private $host = '';
+
+    /**
+     * Port of the server
+     *
+     * @var int
+     */
+    private $port = 0;
+
+    /**
+     * Info
+     *
+     * @var \skies\city\CityStatus
+     */
+    private $info;
 
 
     /**
@@ -71,8 +105,10 @@ class City {
      *
      * @param string $name  Short name of the city
      * @param string $title Title (long name) of the city
+     * @param string $host  Hostname of the server
+     * @param int    $port  Port of the server
      */
-    public function __construct($name, $title) {
+    public function __construct($name, $title, $host, $port) {
 
         // Increase counter
         self::$number += 1;
@@ -80,6 +116,10 @@ class City {
         // Names
         $this->name = $name;
         $this->title = $title;
+
+        // Address
+        $this->host = $host;
+        $this->port = $port;
 
     }
 
@@ -120,7 +160,7 @@ class City {
      * @param int $start Start value
      * @param int $stop  Stop value
      *
-     * @return array Accountlist
+     * @return array<\skies\city\Player> Accountlist
      */
     public function getAccountlist($start, $stop) {
 
@@ -140,12 +180,20 @@ class City {
         }
 
         // Save data in array
-        while($akt_u = $result->fetch_array()) {
-            $return[$akt_u['ID']] = $akt_u;
+        $i = 0;
+
+        $accountList = [];
+        while($line = $result->fetch_array(MYSQLI_ASSOC)) {
+
+            $accountList[$i] = new \skies\city\Player();
+            $accountList[$i]->initLine($line);
+
+            $i++;
+
         }
 
         // return array
-        return $return;
+        return $accountList;
 
     }
 
@@ -218,17 +266,105 @@ class City {
 
         // Exec Query
         if(!$result = $this->db->query($query)) {
-            return 0;
+            return false;
         }
+
         // Save data in array
-        while($akt_u = $result->fetch_array()) {
-            $return[$akt_u['ID']] = $akt_u;
+        $i = 0;
+
+        $accountList = [];
+        while($line = $result->fetch_array(MYSQLI_ASSOC)) {
+
+            $accountList[$i] = new \skies\city\Player();
+            $accountList[$i]->initLine($line);
+
+            $i++;
+
         }
 
         // return array
-        return $return;
+        return $accountList;
 
     }
+
+    /**
+     * Init the citys
+     */
+    public static function initCitys() {
+
+        foreach(\Skies::$config['citys'] as $curCity) {
+
+            self::$cities[$curCity['name']] = new City($curCity['name'], $curCity['title'], $curCity['host'], $curCity['port']);
+            self::$cities[$curCity['name']]->setupDb($curCity['dbHost'], $curCity['dbUser'], $curCity['dbPassword'], $curCity['dbName'], $curCity['dbPrefix']);
+
+        }
+
+        // Do we have a current city?
+        if(isset($_GET['_1']) && isset(self::$cities[$_GET['_1']]))
+            self::$curCity =& self::$cities[$_GET['_1']];
+        else
+            self::$curCity = false;
+    }
+
+
+    /**
+     * Get the status of this city
+     *
+     * @return CityStatus
+     */
+    public function getInfo() {
+
+        if(!empty($this->info))
+            return $this->info;
+
+        $this->info = new \skies\city\CityStatus($this);
+
+        return $this->info;
+
+    }
+
+    /**
+     * @return \skies\system\database\MySQL
+     */
+    public function getDb() {
+        return $this->db;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName() {
+        return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTable() {
+        return $this->table;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle() {
+        return $this->title;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPort() {
+        return $this->port;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHost() {
+        return $this->host;
+    }
+
 
 }
 

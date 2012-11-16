@@ -11,6 +11,30 @@ namespace skies\city;
 class CityStatus {
 
 
+    /**
+     * @var \skies\city\City
+     */
+    private $city;
+
+    /**
+     * Array holding the raw info
+     *
+     * @var array
+     */
+    private $info = [];
+
+
+    /**#@+
+     * Info values
+     */
+
+    private $name = '';
+    private $map = '';
+    private $numPlayers = 0;
+    private $maxPlayers = 0;
+    private $players = [];
+
+    /**#@-*/
 
     /**
      * Fetch status of a CITY server
@@ -19,8 +43,41 @@ class CityStatus {
      */
     public function __construct(\skies\city\City $city) {
 
+        // Save our city
+        $this->city = $city;
 
+        $this->info = self::serverInfoV05($this->city->getHost(), $this->city->getPort());
 
+        if($this->info === false)
+            return false;
+
+        // Save stuff
+        $this->name = $this->info['name'];
+        $this->map = $this->info['map'];
+        $this->maxPlayers = $this->info['maxplayers'];
+        $this->numPlayers = $this->info['numplayers'];
+        $this->players = $this->info['players'];
+
+    }
+
+    public function getMap() {
+        return $this->map;
+    }
+
+    public function getMaxPlayers() {
+        return $this->maxPlayers;
+    }
+
+    public function getName() {
+        return $this->name;
+    }
+
+    public function getNumPlayers() {
+        return $this->numPlayers;
+    }
+
+    public function getPlayers() {
+        return $this->players;
     }
 
 
@@ -45,8 +102,10 @@ class CityStatus {
             $test = explode("\x00",$response);
             $players = array();
 
-            for($i = 0; $i <= $test[6]*2 ; $i += 2)
-                $players[] = array("name" => $test[$i+8],"score" => $test[$i+8+1]);
+            for($i = 0; $i <= $test[6]*2 ; $i += 2) {
+                if(isset($test[$i+8]) && isset($test[$i+8+1]))
+                    $players[] = array("name" => $test[$i+8],"score" => $test[$i+8+1]);
+            }
 
             $tmp = array(
                 "version" => str_replace("info","",str_replace("\xff","",$test[0])),
