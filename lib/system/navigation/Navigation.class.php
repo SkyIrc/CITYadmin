@@ -111,9 +111,9 @@ class Navigation {
                 $classes .= "first ";
             }
 
-            if($i == $entryCount - 1) {
+            /*if($i == $entryCount - 1) {
                 $classes .= "last ";
-            }
+            }*/
 
             // Type (internal/external link) dependant stuff
             switch($entry['type']) {
@@ -168,6 +168,20 @@ class Navigation {
             $i++;
 
         }
+
+        // CITY stuff
+
+        foreach(\skies\city\City::$cities as $city) {
+
+            /** @var $city \skies\city\City */
+
+            $active = (\skies\city\City::$curCity !== false && $city->getName() == \skies\city\City::$curCity->getName());
+
+            $buffer .= '<li'.($active ? ' class="active"' : '').'><a href="'.SUBDIR.'/city/'.$city->getName().'">'.$city->getShortTitle().'</a></li>';
+
+        }
+
+        // end CITY stuff
 
 
         $buffer .= '

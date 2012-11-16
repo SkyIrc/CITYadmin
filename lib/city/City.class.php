@@ -72,6 +72,13 @@ class City {
     private $table = '';
 
     /**
+     * Short title
+     *
+     * @var string
+     */
+    private $shortTitle = '';
+
+    /**
      * How many accounts do we have? (Buffer for self::getAccountCount())
      *
      * @var int
@@ -108,7 +115,7 @@ class City {
      * @param string $host  Hostname of the server
      * @param int    $port  Port of the server
      */
-    public function __construct($name, $title, $host, $port) {
+    public function __construct($name, $title, $shortTitle, $host, $port) {
 
         // Increase counter
         self::$number += 1;
@@ -116,6 +123,7 @@ class City {
         // Names
         $this->name = $name;
         $this->title = $title;
+        $this->shortTitle = $shortTitle;
 
         // Address
         $this->host = $host;
@@ -294,7 +302,7 @@ class City {
 
         foreach(\Skies::$config['citys'] as $curCity) {
 
-            self::$cities[$curCity['name']] = new City($curCity['name'], $curCity['title'], $curCity['host'], $curCity['port']);
+            self::$cities[$curCity['name']] = new City($curCity['name'], $curCity['title'], $curCity['short_title'], $curCity['host'], $curCity['port']);
             self::$cities[$curCity['name']]->setupDb($curCity['dbHost'], $curCity['dbUser'], $curCity['dbPassword'], $curCity['dbName'], $curCity['dbPrefix']);
 
         }
@@ -349,6 +357,13 @@ class City {
      */
     public function getTitle() {
         return $this->title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShortTitle() {
+        return $this->shortTitle;
     }
 
     /**

@@ -33,8 +33,8 @@ registration: false
 citys:
 
     - name: moro
-      title: 'moro\'s City Server'
-      host:
+      short_title: moro
+      title: 'moro\'s City server'
       port: 8303
       dbHost: localhost
       dbUser: ''
